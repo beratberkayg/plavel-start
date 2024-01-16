@@ -2,6 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // theme config import
 import themeConfig from "@/configs/themeConfig";
+import i18n from "@/i18/i18n";
+
+const initialLanguage = () => {
+  const item = window.localStorage.getItem("language");
+  return item ? JSON.parse(item) : themeConfig.layout.language;
+};
 
 const initialDarkMode = () => {
   const item = window.localStorage.getItem("darkMode");
@@ -38,6 +44,7 @@ const initialMonochrome = () => {
   return item ? JSON.parse(item) : themeConfig.layout.isMonochrome;
 };
 const initialState = {
+  language: initialLanguage(),
   isRTL: initialRtl(),
   darkMode: initialDarkMode(),
   isCollapsed: initialSidebarCollapsed(),
@@ -57,6 +64,11 @@ export const layoutSlice = createSlice({
   name: "layout",
   initialState,
   reducers: {
+    handleLanguage: (state, action) => {
+      state.language = action.payload;
+      window.localStorage.setItem("language", JSON.stringify(action.payload));
+      i18n.changeLanguage(action.payload);
+    },
     // handle dark mode
     handleDarkMode: (state, action) => {
       state.darkMode = action.payload;
@@ -118,6 +130,7 @@ export const layoutSlice = createSlice({
 });
 
 export const {
+  handleLanguage,
   handleDarkMode,
   handleSidebarCollapsed,
   handleCustomizer,

@@ -1,15 +1,26 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 
 import Usa from "@/assets/images/flags/usa.png";
-import Gn from "@/assets/images/flags/gn.png";
+import Tr from "@/assets/images/flags/turkey.png";
+import useLanguage from "@/hooks/useLanguage";
+import { useDispatch } from "react-redux";
+import { handleLanguage } from "@/store/layout";
+
 const months = [
-  { name: "En", image: Usa },
-  { name: "Gn", image: Gn },
+  { name: "tr", image: Tr },
+  { name: "en", image: Usa },
 ];
 
 const Language = () => {
-  const [selected, setSelected] = useState(months[0]);
+  const [language] = useLanguage();
+  const dispatch = useDispatch();
+  const selectedLanguage = months.find((i) => i.name === language);
+  const [selected, setSelected] = useState(selectedLanguage);
+
+  useEffect(() => {
+    dispatch(handleLanguage(selected.name));
+  }, [selected]);
 
   return (
     <div>
