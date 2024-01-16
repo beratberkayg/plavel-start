@@ -4,8 +4,10 @@ import Icon from "@/components/ui/Icon";
 import { Menu, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "@/store/api/auth/authSlice";
 
 import UserAvatar from "@/assets/images/all-img/user.png";
+import { useTranslation } from "react-i18next";
 
 const profileLabel = () => {
   return (
@@ -35,6 +37,8 @@ const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const { t } = useTranslation();
+
   const handleLogout = () => {
     // Clear user data from local storage
     localStorage.removeItem("user");
@@ -43,7 +47,7 @@ const Profile = () => {
 
   const ProfileMenu = [
     {
-      label: "Profile",
+      label: t("Profile"),
       icon: "heroicons-outline:user",
 
       action: () => {
@@ -51,52 +55,52 @@ const Profile = () => {
       },
     },
     {
-      label: "Chat",
+      label: t("Chat"),
       icon: "heroicons-outline:chat",
       action: () => {
         console.log("chat");
       },
     },
     {
-      label: "Email",
+      label: t("Email"),
       icon: "heroicons-outline:mail",
       action: () => {
         console.log("email");
       },
     },
     {
-      label: "Todo",
+      label: t("Todo"),
       icon: "heroicons-outline:clipboard-check",
       action: () => {
         console.log("todo");
       },
     },
     {
-      label: "Settings",
+      label: t("Settings"),
       icon: "heroicons-outline:cog",
       action: () => {
         console.log("settings");
       },
     },
     {
-      label: "Price",
+      label: t("Price"),
       icon: "heroicons-outline:credit-card",
       action: () => {
         console.log("price");
       },
     },
     {
-      label: "Faq",
+      label: t("Faq"),
       icon: "heroicons-outline:information-circle",
       action: () => {
         console.log("faq");
       },
     },
     {
-      label: "Logout",
+      label: t("Logout"),
       icon: "heroicons-outline:login",
       action: () => {
-        console.log("logout");
+        handleLogout();
       },
     },
   ];
